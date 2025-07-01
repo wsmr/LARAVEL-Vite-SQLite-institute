@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,12 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/test-db', function () {
+    try {
+        DB::connection()->getPdo();
+        return "Connected successfully to: " . DB::connection()->getDatabaseName();
+    } catch (\Exception $e) {
+        return "Connection failed: " . $e->getMessage();
+    }
+});
